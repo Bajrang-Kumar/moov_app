@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Changed Successfully</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .success-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .success-icon {
+            font-size: 50px;
+            color: #4CAF50;
+        }
+
+        .success-message {
+            font-size: 24px;
+            color: #333333;
+            margin: 20px 0;
+        }
+
+        .success-description {
+            font-size: 16px;
+            color: #666666;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="success-container">
+        <div class="success-icon">✔️</div>
+        <div class="success-message">Password Changed Successfully!</div>
+        <div class="success-description">Your password has been updated. You can now use your new password to log in.
+        </div>
+        <a href="/login" class="btn">Go to Login</a>
+    </div>
+</body>
+
+</html>

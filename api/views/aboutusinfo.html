@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css'>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js'></script>
+    <style type='text/css'>
+        @media (max-width: 767px) {
+            body{
+                background-size: 130%;
+            }    
+        }
+    </style>
+    <title>About Us</title>
+</head>
+<body>
+    <div class='col-md-12'>
+        <% if(data != null ) { %>
+            <%- data.content %>
+        <% } else { %>
+            <div class="col-xs-12 mt-5">
+                <h4 style="text-align: center;">No About Us Data</h4>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
+            

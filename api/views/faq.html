@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style type='text/css'>
+        .faq .panel-title>a:before {
+            float: right !important;
+            font-family: FontAwesome;
+            content: "\f056";
+            padding-right: 5px;
+        }
+
+        .faq .panel-title>a.collapsed:before {
+            float: right !important;
+            content: "\f055";
+        }
+
+        .faq h2 {
+            color: #ff9800;
+        }
+
+        .faq a {
+            text-decoration: none;
+            display: block;
+        }
+
+        .faq .panel-default>.panel-heading {
+            color: black;
+        }
+
+        p {
+            text-align: justify;
+        }
+    </style>
+    <title>FAQs</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row" style="margin-top: 20px;">
+            <% if(data != null ) {
+                for (let i = 0; i < data.length; i++) { %>
+                <div class="col-xs-12">
+                    <div class="faq">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="heading<%= data[i].id %>">
+                                    <h3 class="panel-title">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                            href="#collapse<%= data[i].id %>" aria-expanded="false"
+                                            aria-controls="collapse1st">
+                                            <%= data[i].question %>
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div id="collapse<%= data[i].id %>" class="panel-collapse collapse" role="tabpanel"
+                                    aria-labelledby="heading<%= data[i].id %>">
+                                    <div class="panel-body">
+                                        <p><%- data[i].answer %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } } else { %>
+                <div class="col-xs-12">
+                    <h4 style="text-align: center;">No FAQ data</h4>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+
+</html>

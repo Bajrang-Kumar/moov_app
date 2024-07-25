@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
+    <script src="https://parsleyjs.org/dist/parsley.min.js"></script>
+    <link rel="stylesheet" href="https://parsleyjs.org/src/parsley.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <title>Reset Password</title>
+    <style>
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 70px;
+            padding: 0;
+        }
+
+        .form-container #form {
+            padding: 30px 25px;
+            background-color: rgb(0, 0, 0);
+            border-radius: 8px;
+        }
+
+        .form-container #form h2 {
+            text-align: center;
+            color: rgb(255, 250, 250);
+            font-weight: 600;
+        }
+
+        .form-action #new_password {
+            font-size: 15px;
+            padding: 10px 12px;
+            margin-top: 10px;
+            width: 240px;
+            outline: none;
+            border: none;
+            border-radius: 8px;
+        }
+
+        #form #img-div {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        #form #img-div img {
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            align-items: center;
+        }
+
+        #form #newpassword-div {
+            margin: 12px;
+        }
+
+        #form #confirmpassword-div {
+            margin: 12px 12px 0 12px;
+        }
+
+        #form #pattern-error {
+            margin-left: 13px;
+            color: red;
+            font-weight: 600;
+            display: inline-block;
+            width: 250px;
+            word-wrap: break-word;
+        }
+
+        /* Show Password */
+        .form-action {
+            margin-bottom: 10px;
+        }
+
+        .password-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        /*  */
+
+        .form-action #confirm_password {
+            font-size: 15px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            width: 240px;
+            outline: none;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .form-action #reset_btn {
+            margin: 20px 0 20px 0;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 6px;
+            background-color: rgb(255, 8, 8);
+            color: rgb(247, 250, 250);
+            font-weight: 700;
+        }
+
+        .form-action ul .parsley-pattern {
+            text-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <form id="form" action="post" data-parsley-validate="">
+            <div id="img-div">
+                <img src="http://localhost:7890/app_logo.png" />
+            </div>
+            <h2>Reset Password</h2>
+            <div class="form-action" id="newpassword-div">
+                <div class="password-container">
+                    <input type="password" name="new_password" id="new_password" placeholder="New Password">
+                    <span class="eye-icon" onclick="togglePasswordVisibility('new_password', this)">👁️</span>
+                </div>
+            </div>
+            <span id="pattern-error"></span>
+            <div class="form-action" id="confirmpassword-div">
+                <div class="password-container">
+                    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password">
+                    <span class="eye-icon" onclick="togglePasswordVisibility('confirm_password', this)">👁️</span>
+                </div>
+            </div>
+            <span id="pattern-error2"></span>
+            <div class="form-action" style="text-align: center;">
+                <input type="submit" id="reset_btn" data-id="<%= id %>" value="Submit" style="cursor: pointer;">
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script>
+
+        function togglePasswordVisibility(fieldId, icon) {
+            const passwordField = document.getElementById(fieldId);
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.textContent = '🙈'; // Change icon to a closed eye or something similar
+            } else {
+                passwordField.type = 'password';
+                icon.textContent = '👁️'; // Change icon back to an open eye
+            }
+        }
+
+        let btn = document.getElementById('reset_btn');
+
+        let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W_])[a-zA-Z\d\W_]{8,}$/;
+
+        let new_password = document.getElementById('new_password');
+
+        let confirm_password = document.getElementById('confirm_password');
+
+        new_password.addEventListener('keyup', () => {
+            let error_span = document.getElementById('pattern-error');
+            if (new_password.value == '') {
+                error_span.innerText = 'The new password field is required';
+            } else if (!pattern.test(new_password.value)) {
+                error_span.innerText = 'Password must have minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character';
+            } else {
+                error_span.innerText = '';
+            }
+        });
+
+        let error_span2 = document.getElementById('pattern-error2');
+        error_span2.style.display = 'none';
+        confirm_password.addEventListener('keyup', () => {
+
+            if (confirm_password.value != new_password.value) {
+                error_span2.style.marginLeft = '13px';
+                error_span2.style.color = 'red';
+                error_span2.style.fontWeight = '600';
+                error_span2.style.display = 'inline-block';
+                error_span2.style.width = '250px';
+                error_span2.style.wordWrap = 'break-word';
+                error_span2.innerText = "New Password and Confirm Password doesn't match";
+            } else {
+                error_span2.style.display = 'none';
+                error_span2.innerText = '';
+            }
+        });
+
+        btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            let confirm_password = document.getElementById('confirm_password');
+
+            if (new_password.value == '') {
+                toastr.error('The new password field is required');
+            } else if (pattern.test(new_password.value)) {
+
+                let response = await fetch(`http://localhost:7890/api/v1/admin/reset_password/${btn.dataset.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        new_password: new_password.value,
+                        confirm_password: confirm_password.value
+                    })
+                });
+                let result = await response.json();
+                console.log("result /-/--/-/-/-/-/--/", result)
+
+                if (result.code == '0') {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": false,
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": 300,
+                        "hideDuration": 1500,
+                        "timeOut": 1500,
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "show",
+                        "hideMethod": "hide"
+                    };
+                    toastr.error(result.message);
+                }
+                else {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": true,
+                        "progressBar": false,
+                        "preventDuplicates": true,
+                        "onclick": null,
+                        "showDuration": 450,
+                        "hideDuration": 700,
+                        "timeOut": 700,
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "show",
+                        "hideMethod": "hide"
+                    };
+                    toastr.success(result.message);
+                    setTimeout(() => {
+                        window.location.href = "http://localhost:7890/api/v1/admin/success";
+                    }, 1000);
+                }
+            } else {
+                let error_span = document.getElementById('pattern-error');
+                error_span.innerText = 'Password does not match the pattern';
+            }
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .error-icon {
+            font-size: 50px;
+            color: #ff0f0f;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            font-size: 24px;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        .error-description {
+            font-size: 16px;
+            color: #666666;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: #ff0f0f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #e00e0e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="error-icon">⚠️</div>
+        <div class="error-message">Reset Password Link Expired</div>
+        <div class="error-description">The link you used to reset your password has expired. Please request a new
+            password reset link.</div>
+        <a href="#" class="btn">Request New Link</a>
+    </div>
+</body>
+
+</html>

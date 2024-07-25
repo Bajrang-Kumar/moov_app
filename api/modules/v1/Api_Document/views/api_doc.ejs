@@ -1,0 +1,1344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+	<link href="https://unpkg.com/vuetify@1.0.17/dist/vuetify.min.css" type="text/css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet">
+	<link rel="shortcut icon" href="<%= GLOBALS.BASE_URL_WITHOUT_PORT + GLOBALS.LOGO%>">
+	<title>
+		<%= GLOBALS.APP_NAME %> API LIST
+	</title>
+	<style type="text/css">
+		.medium-text {
+			font-size: 18px;
+			color: white;
+		}
+
+		.js div#preloader {
+			position: fixed;
+			left: 0;
+			top: 0;
+			z-index: 999;
+			width: 100%;
+			height: 100%;
+			overflow: visible;
+			background: #fff url('<%= GLOBALS.BASE_URL_WITHOUT_API %>ripple.gif') no-repeat center center;
+		}
+	</style>
+</head>
+
+<body class="js">
+	<div id="preloader"></div>
+	<div id="app">
+		<v-app id="inspire">
+			<v-layout justify column>
+				<v-flex style="margin:10px auto 10px auto; padding:0px; text-align:center;" center right sm2 xs2 md2 lg2
+					xl2>
+
+					<!-- <img src='<%= GLOBALS.BASE_URL_WITHOUT_PORT + GLOBALS.LOGO%>'
+						style="width: 10rem; height: 10rem; border-radius: 50rem; border: 3px solid black; border-image: linear-gradient(to right, red, rgb(11, 53, 238)) 1;">
+					<br> -->
+
+					<div
+						style="position: relative; display: inline-block; width: 10rem; height: 10rem; border-radius: 50%; padding: 3px; background: linear-gradient(to right, red, darkblue);">
+						<img src="<%= GLOBALS.BASE_URL_WITHOUT_PORT + GLOBALS.LOGO %>"
+							style=" width: 100%; height: 100%; border-radius: 50%; display: block; background: white; padding: 3px; box-sizing: border-box; ">
+						<strong style="font-size:24px;">
+							<%= GLOBALS.APP_NAME %> API LIST
+						</strong><br><br>
+					</div>
+
+
+					<v-alert :value="true" outline color="white" style="padding:5px;">
+						<v-chip color="orange" text-color="">
+							<v-avatar>
+								<v-icon>bookmark</v-icon>
+							</v-avatar>
+							<b>TOTAL {{messages.length}} APIs</b>
+						</v-chip>
+					</v-alert>
+
+					<v-alert :value="true" outline color="white" style="padding:5px;">
+						<v-chip color="light-blue" text-color="">
+							<v-avatar>
+								<v-icon>label_important</v-icon>
+							</v-avatar>
+							<b>If Device Token not get, pass 0 only</b>
+						</v-chip>
+						<v-chip color="light-blue" text-color="">
+							<v-avatar>
+								<v-icon>label_important</v-icon>
+							</v-avatar>
+							<b>Upload images on S3 bucket</b>
+						</v-chip>
+					</v-alert>
+				</v-flex>
+				<v-flex style="margin:0px auto; padding:0px;" center right sm2 xs2 md2 lg2 xl2>
+
+					<div id="main1" style="margin:0px auto; position:sticky;">
+						<table border="0" cellpadding="10" cellspacing="10" width="100%"
+							style="background: linear-gradient(150deg, #2c3152 50%, #010f66) !important; color: #fff; font-weight: bold; border-radius: 1rem;">
+							<tr>
+								<td><b>Server URL </b></td>
+								<td><img src='<%= GLOBALS.BASE_URL_WITHOUT_API+ GLOBALS.ARROW_IMAGE %>'
+										style="width: 40px; border-radius: 5px;">&nbsp;&nbsp;
+									<b>
+										<%= GLOBALS.PORT_BASE_URL %>api/v1/
+									</b>
+								</td>
+							</tr>
+							<tr>
+								<td><b>Header Parameters </b></td>
+								<td><img src='<%= GLOBALS.BASE_URL_WITHOUT_API+ GLOBALS.ARROW_IMAGE %>'
+										style="width: 40px; border-radius: 5px;">&nbsp;&nbsp;
+									<b>
+										API-KEY, TOKEN
+									</b>
+								</td>
+							</tr>
+							<tr>
+								<td><b>API-KEY </b></td>
+								<td><img src='<%= GLOBALS.BASE_URL_WITHOUT_API+ GLOBALS.ARROW_IMAGE %>'
+										style="width: 40px; border-radius: 5px;">&nbsp;&nbsp;
+									<b>
+										<%= GLOBALS.API_KEY %> (vyYSDnpAqG5YESnqyj+K/w==)
+									</b>
+								</td>
+							</tr>
+							<tr>
+								<td><b>KEY </b></td>
+								<td><img src='<%= GLOBALS.BASE_URL_WITHOUT_API+ GLOBALS.ARROW_IMAGE %>'
+										style="width: 40px; border-radius: 5px;">&nbsp;&nbsp;
+									<b>
+										<%= GLOBALS.KEY %>
+									</b>
+								</td>
+							</tr>
+							<tr>
+								<td><b>IV </b></td>
+								<td><img src='<%= GLOBALS.BASE_URL_WITHOUT_API+ GLOBALS.ARROW_IMAGE %>'
+										style="width: 40px; border-radius: 5px;">&nbsp;&nbsp;
+									<b>
+										<%= GLOBALS.IV %>
+									</b>
+								</td>
+							</tr>
+						</table>
+						<br> <br>
+					</div>
+				</v-flex>
+				<v-flex style="margin:0px auto;" center right sm2 xs2 md2 lg2 xl2>
+					<a target="_blank" href='/v1/api_document/user_list'>
+						<v-btn color="pink" class="white--text" style="border-radius: 2rem;">
+							USER LIST <v-icon right dark>people</v-icon>
+						</v-btn>
+					</a>
+					<a target="_blank" href='/v1/api_document/code'>
+						<v-btn color="pink" class="white--text" style="border-radius: 2rem;">
+							CODE REFERENCE <v-icon right dark>code</v-icon>
+						</v-btn>
+					</a>
+					<a target="_blank" href='<%= GLOBALS.BASE_URL_WITHOUT_PORT %>NodeJs/Moov App/backend/enc_dec.php'>
+						<v-btn color="pink" class="white--text" style="border-radius: 2rem;">
+							ENCRYPTION URL <v-icon right dark>lock</v-icon>
+						</v-btn>
+					</a>
+				</v-flex>
+
+				<v-expansion-panel popout>
+					<v-expansion-panel-content v-for="(message, i) in messages" :key="i" hide-actions>
+						<v-layout slot="header" align-center row spacer>
+							<v-flex sm1 xs1 md1 lg1 xl1>
+								<v-avatar slot="activator" size="36px">
+									<v-icon :color="message.color">{{ message.icon }}</v-icon>
+								</v-avatar>
+							</v-flex>
+							<v-flex sm3 xs3 md3 lg3 xl3>
+								<strong v-html="message.title"></strong>
+								<v-chip v-if="message.meth" :color="`${message.color} lighten-4`" label small
+									class="ml-0">
+									{{ message.meth }}
+								</v-chip>
+							</v-flex>
+							<v-flex sm3 xs3 md3 lg3 xl3>
+								<strong v-html="message.name"></strong><br>
+								<span v-if="message.updated" style="color:orange">{{ message.updated }}</span>
+								<span v-if="message.new_added" style="color:green"><span
+										v-html="message.new_added"></span></span>
+							</v-flex>
+							<v-flex sm4 xs4 md4 lg4 xl4>
+								<v-flex v-if="message.link" class="grey--text" ellipsis hidden-sm-and-down>
+									{{ message.link }}
+								</v-flex>
+								<v-flex class="grey--text" ellipsis hidden-sm-and-down>
+									<span v-if="message.imp" style="color:darkred">SHOW IMPORTANT NOTE INSIDE</span>
+								</v-flex>
+							</v-flex>
+						</v-layout>
+
+						<v-card dark>
+							<v-container>
+								<v-layout v-if="message.new_tag === '0'">
+									<v-flex xs12 align-end flexbox>
+										<v-alert v-if="message.new_added" :value="true" outline color="white"
+											style="padding:5px;">
+											<v-chip color="green" text-color="white">
+												<v-avatar>
+													<v-icon>fiber_new</v-icon>
+												</v-avatar> NEW
+											</v-chip>
+											<span v-html="message.new_added"></span>
+										</v-alert>
+										<v-alert v-if="message.updated" :value="true" outline color="white"
+											style="padding:5px;">
+											<v-chip color="orange" text-color="white">
+												<v-avatar>
+													<v-icon>update</v-icon>
+												</v-avatar> UPDATED
+											</v-chip>
+											<span>{{ message.updated }}</span>
+										</v-alert>
+										<v-alert :value="true" outline color="white" style="padding:5px;">
+											<v-chip color="teal" text-color="white">
+												<v-avatar>
+													<v-icon>check_circle</v-icon>
+												</v-avatar> MANDATORY
+											</v-chip>
+											{{message.mandatory}}
+										</v-alert>
+										<v-alert :value="true" outline color="white" style="padding:5px;">
+											<v-chip outline color="#F0F4C3">
+												<v-avatar>
+													<v-icon>check_circle</v-icon>
+												</v-avatar>OPTIONAL
+											</v-chip>
+											<span>{{ message.optional }}
+										</v-alert>
+										<v-alert v-if="message.link" :value="true" outline color="white"
+											style="padding:5px;">
+											<v-chip color="light-green darken-2" text-color="white">
+												<v-avatar>
+													<v-icon>link</v-icon>
+												</v-avatar> LINK
+											</v-chip>
+											<span>{{ message.link }}
+										</v-alert>
+										<v-alert v-if="message.imp" :value="true" outline color="white"
+											style="padding:5px;">
+											<v-chip color="red darken-2" text-color="white">
+												<v-avatar>
+													<v-icon>new_releases</v-icon>
+												</v-avatar> IMPORTANT
+											</v-chip>
+											<p v-html="message.imp"></p>
+										</v-alert>
+										<v-alert v-if="message.notes" :value="true" outline color="white"
+											style="padding:5px;">
+											<v-chip color="blue lighten-1" text-color="white">
+												<v-avatar>
+													<v-icon>bookmark</v-icon>
+												</v-avatar> NOTES
+											</v-chip>
+											<span>{{ message.notes }}
+										</v-alert>
+										<v-alert v-if="message.example" :value="true" outline color="white"
+											style="padding:5px;">
+											<v-chip color="red darken-2" text-color="white">
+												<v-avatar>
+													<v-icon>check_circle</v-icon>
+												</v-avatar> EXAMPLE
+											</v-chip>
+											<p v-html="message.example"></p>
+										</v-alert>
+										<v-layout style="margin-top:-4px">
+											<v-flex xs6 align-end flexbox>
+												<v-alert :value="true" outline color="yellow" icon="priority_high"
+													style="padding:5px;">
+													<span class="grey--text">HEADER : {{ message.is_header }}, PUSH : {{
+														message.is_push }}</span><br>
+													<span>HEADER : {{ message.header }}</span>
+												</v-alert>
+											</v-flex>
+											<v-flex xs6 align-end flexbox>
+												<v-alert style="margin-left:4px; padding:5px;" :value="true" outline
+													color="yellow" icon="priority_high">
+													STATUS : <span v-html="message.status"></span>
+												</v-alert>
+											</v-flex>
+										</v-layout>
+									</v-flex>
+								</v-layout>
+							</v-container>
+							<v-card-actions>
+							</v-card-actions>
+						</v-card>
+					</v-expansion-panel-content>
+				</v-expansion-panel>
+			</v-layout>
+		</v-app>
+	</div>
+	<div id="asd"></div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+	<script src="https://unpkg.com/vuetify@1.0.17/dist/vuetify.min.js"></script>
+	<script src="https://unpkg.com/babel-polyfill/dist/polyfill.min.js"></script>
+	<script>
+
+		jQuery(document).ready(function ($) {
+			$('#preloader').fadeOut('slow', function () { $(this).remove(); });
+		});
+
+		var base_url = "<%= GLOBALS.PORT_BASE_URL %>api/v1/";
+		var base_url_without_api = "<%= GLOBALS.BASE_URL_WITHOUT_API %>";
+		let i = 1;
+
+		new Vue({
+			el: '#app',
+			data: () => ({
+				messages: [
+					{
+						new_tag: '0',
+						color: 'orange',
+						icon: 'http',
+						title: 'DIRECT LINK',
+						name: 'ABOUT US',
+						meth: 'Link',
+						link: "<%= GLOBALS.PORT_BASE_URL %>moov_app/home/aboutusinfo",
+						imp: "ABOUT US",
+					},
+					{
+						new_tag: '0',
+						color: 'orange',
+						icon: 'http',
+						title: 'DIRECT LINK',
+						name: 'TERMS & CONDITION',
+						meth: 'Link',
+						link: "<%= GLOBALS.PORT_BASE_URL %>moov_app/home/termsandcondition",
+						imp: "TERMS & CONDITION",
+					},
+					{
+						new_tag: '0',
+						color: 'orange',
+						icon: 'http',
+						title: 'DIRECT LINK',
+						name: 'PRIVACY POLICY',
+						meth: 'Link',
+						link: "<%= GLOBALS.PORT_BASE_URL %>moov_app/home/privacypolicy",
+						imp: "PRIVACY POLICY",
+					},
+					{
+						new_tag: '0',
+						color: 'orange',
+						icon: 'http',
+						title: 'DIRECT LINK',
+						name: 'FAQ',
+						meth: 'Link',
+						link: "<%= GLOBALS.PORT_BASE_URL %>moov_app/home/faq",
+						imp: "FAQ",
+					},
+
+					// {
+					// 	new_tag: '1',
+					// 	color: 'blue',
+					// 	title: 'Admin API',
+					// 	icon: '',
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'home',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'LOGIN',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/admin/login",
+					// 	mandatory: "email,password",
+					// 	optional: "",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY",
+					// 	notes: "This api is used to Login",
+					// 	example: '{ "email": "adminmoov@yopmail.com" , "password": "Admin@1234" }',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'home',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'LOGOUT',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/admin/logout",
+					// 	mandatory: "",
+					// 	optional: "",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY, TOKEN",
+					// 	notes: "This api is used to Logout",
+					// 	example: '',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'home',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'PROFILE',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/admin/profile",
+					// 	mandatory: "",
+					// 	optional: "",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY, TOKEN",
+					// 	notes: "This api is used for Profile",
+					// 	example: '',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'home',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'UPDATE PROFILE',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/admin/update_profile",
+					// 	mandatory: "",
+					// 	optional: "profile_image, first_name, last_name, email, password, country_code, phone",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY,TOKEN",
+					// 	notes: "This api is used to Update Profile",
+					// 	example: '{ "profile_image" : "profile.jpg", "first_name": "Admin", "last_name": "Moov", "email": "adminmoov@gmail.com": "country_code": "+91", "phone": "9798367737" }',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'home',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'CHANGE PASSWORD',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/admin/change_password",
+					// 	mandatory: "old_password,new_password,confirm_password",
+					// 	optional: "",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY,TOKEN",
+					// 	notes: "This api is used to Change Password",
+					// 	example: '{ "old_password": "Admin@1234", "new_password": "Admin@123", "confirm_password": "Admin@123" }',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'home',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'FORGOT PASSWORD',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/admin/forgot_password",
+					// 	mandatory: "email",
+					// 	optional: "",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY",
+					// 	notes: "This api is used to Forgot Password to send Reset Password link to email",
+					// 	example: '{ "email": "adminmoov@yopmail.com" }',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "Once Reset Password Link Email received, - Click on Reset Password Button to reset your password",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'person',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'Set Password',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/auth/setpassword",
+					// 	mandatory: "user_id,new_password,confirm_password",
+					// 	optional: "",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY",
+					// 	notes: "This api is used to set Password after verifing otp through mobile_number",
+					// 	example: '',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'person',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'Update Device Information',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/auth/updatedeviceinfo",
+					// 	mandatory: "device_type[A,I],device_token",
+					// 	optional: "ip,os_version,model_name",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY,TOKEN",
+					// 	notes: "This api is used to Update Device Information",
+					// 	example: '',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'person',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'Update Location',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/auth/updatelatlng",
+					// 	mandatory: "latitude,longitude",
+					// 	optional: "",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY,TOKEN",
+					// 	notes: "This api is used to Update Location",
+					// 	example: '',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'person',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'SIGNOUT',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/auth/signout",
+					// 	mandatory: "",
+					// 	optional: "",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY,TOKEN",
+					// 	notes: "This api is used to SIGNOUT",
+					// 	example: '',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'person',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'Contact Us',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/auth/contactus",
+					// 	mandatory: "full_name,email,subject",
+					// 	optional: "description,user_id",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY,TOKEN",
+					// 	notes: "This api is used to Contact Us",
+					// 	example: '',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'person',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'Edit Profile',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/auth/editprofile",
+					// 	mandatory: "user_name,email,country_code,mobile_number",
+					// 	optional: "",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY,TOKEN",
+					// 	notes: "This api is used to Edit Profile",
+					// 	example: '',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'person',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'Update Profile Privacy',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/auth/profileprivacy",
+					// 	mandatory: "privateprofile[1,0]",
+					// 	optional: "",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY,TOKEN",
+					// 	notes: "This api is used to Update Profile Privacy",
+					// 	example: '',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+					// {
+					// 	new_tag: '0',
+					// 	color: 'blue',
+					// 	icon: 'person',
+					// 	title: i++ + ' : Admin Auth',
+					// 	name: 'Update Security',
+					// 	meth: 'POST',
+					// 	link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/auth/updatesecurity",
+					// 	mandatory: "username,",
+					// 	optional: "email,dob[Y-m-d],location,latitude,longitude",
+					// 	is_header: "YES",
+					// 	is_push: "NO",
+					// 	header: "API-KEY,TOKEN",
+					// 	notes: "This api is used to Update Security",
+					// 	example: '',
+					// 	status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+					// 	imp: "",
+					// },
+
+					{
+						new_tag: '2',
+						color: 'green',
+						title: 'USER API',
+						icon: '',
+					},
+
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER SIGNUP',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/signup",
+						mandatory: "first_name, last_name, country_code, phone ,email, password, is_checked, device_type[A,I], device_token",
+						optional: "device_name, os_version",
+						is_header: "YES",
+						is_push: "NO",
+						header: "API-KEY",
+						notes: "This api is used to Customer Signup",
+						example: '{ "first_name": "Venil", "last_name": "Gujjar", "email": "sahil@yopmail.com" , "password": "Sahil@123", "country_code" : "+91", "phone" : "7893452783", "is_checked" : "1", "device_type": "A", "device_token": "dytfdyfgwe5f867t26rwdh" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "is_checked field is for CMS Pages , so it should be checked",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER OTP VERIFICATION',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/otp_verify",
+						mandatory: "otp",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer OTP Verification after SIgnup",
+						example: '{ "otp" : "6789" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "Check for Email - One OTP is sent to registered Email",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER RESEND OTP',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/resend_otp",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer resend otp , if didn't receive otp",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER LOGIN',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/login",
+						mandatory: "country_code, phone, password, device_type[A,I], device_token",
+						optional: 'device_name, os_version',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY",
+						notes: "This is used to Customer Login",
+						example: '{ "country_code" : "+91" , "phone" : "7893673923" , "password" : "Anil@123", "device_type": "A", "device_token": "dytfdyfgwe5f867t26rwdh" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER LOGOUT',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/logout",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer Logout",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER DELETE PROFILE',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/delete_profile",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer Delete Profile",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER GET PROFILE',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/profile",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer Get Profile",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER UPDATE PROFILE',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/update_profile",
+						mandatory: "",
+						optional: 'profile_image, first_name, last_name, country_code, phone',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer Update Profile",
+						example: ' { "profile_image" : "moov.jpg", "first_name" : "Jayesh" , "last_name": "Patel", "country_code" : "+997", "phone" : "8987576543"}',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER CHANGE PASSWORD',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/change_password",
+						mandatory: "old_password, new_password, confirm_password",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer Change Password",
+						example: '{ "old_password" : "Venom@123", "new_password" : "Anil@123", "confirm_password" : "Anil@123" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER FORGOT PASSWORD',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/forgot_password",
+						mandatory: "country_code, phone",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY",
+						notes: "This is used to Customer Forgot Password",
+						example: '{ "country_code" : "+91" , "phone" : "7896784382" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "Enter registered Phone Number to get OTP",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER RESEND OTP FOR FORGOT PASSWORD',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/resend_forgot_otp",
+						mandatory: "country_code, phone",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY",
+						notes: "This is used to Customer Forgot Password",
+						example: '{ "country_code" : "+91" , "phone" : "7896784382" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "Pass Country Code and Phone Number of Customer again or save locally and use it.",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER VERIFY OTP',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/verify_otp",
+						mandatory: "user_id, otp",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY",
+						notes: "This is used to Customer verify otp after forgot password",
+						example: '{ "user_id" : "1" , "otp" : "8379" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER RESET PASSWORD',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/reset_password",
+						mandatory: "user_id, new_password, confirm_password",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY",
+						notes: "This is used to Customer reset password after forgot password",
+						example: '{ "user_id" : "1", "new_password" : "Anil@123", "confirm_password" : "Anil@123" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER ADDRESS',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/get_address",
+						mandatory: "",
+						optional: 'address_type[current, delivery, shipping]',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer Address",
+						example: '{ "address_type" : "current" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "Pass current , delivery, shipping in Address Type ",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER ADD, UPDATE, DELETE ADDRESS',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/add_update_delete_address",
+						mandatory: "type[add,update,delete], address_id[unless type is add], address_type[current, delivery, shipping], house_name, address, street, city, state, country, zip_code, latitude, longitude",
+						optional: 'house_name, address, street, city, state, country, zip_code, latitude, longitude',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer Add , Update & Delete Address",
+						example: 'Example 1 :- {"type": "add", "address_type": "current", "house_name" : "House 1", "address": "address nhi pata", "street": "Shaitaan Gali", "city": "Chamunda City", "state" : "Powerful State", "country" : "Powerful Country", "zip_code" : "0420", "latitude" : "420420420420" , "longitude" : "840840840840"} , Example 2 :- { "type": "update", "address_id" : "2", "house_name" : "Bhoot Banglaw", "address" : "Kabhi Bhool nhi Paoge!"} , Example 3 :-  { "type" : "delete" : "address_id" : "2" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "Address Id { address_id } is required Only in Update and Delete",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER WALLET AMOUNT',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/wallet_details",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer wallet details",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER ADD, UPDATE RATING & REVIEW',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/add_rate_review",
+						mandatory: "shop_id, rating, review",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer rating & review of Shop",
+						example: '{ "shop_id" : "1", "rating" : "4" , "review" : "Kya mast leg piece hai re bawa.." }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "This Api is for adding & updating rating & review of any shop",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER ADD PAYMENT METHOD',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/add_payment",
+						mandatory: "holder_name, card_number, expired_month, cvv_number",
+						optional: 'is_saved',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer add payment method",
+						example: '{ "holder_name" : "Devid", "card_number" : "4242442424242234" , "expired_month" : "12/30" , "cvv_number" : "089", "is_saved" : "1" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER ADD, REMOVE WISHLIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/add_remove_wishlist",
+						mandatory: "product_id",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer add & remove any product into Wishlist",
+						example: '{ "product_id" : "1" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER WISHLIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/user_wishlist",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer wishlist",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER NOTIFICATIONS',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/notifications",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer notification list",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER CLEAR ALL | DELETE NOTIFICATIONS',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/clear_notification",
+						mandatory: "",
+						optional: 'notification_id',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer clear all | delete notification list",
+						example: '{ "notification_id" : "1" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "Pass notification_id when delete particular notification else it will delete all notification of user.",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER ADD & UPDATE CART',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/add_update_to_cart",
+						mandatory: "product_id, quantity",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer add and update product to cart",
+						example: '{ "product_id" : "1", "quantity" : "2" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "Products must be from same Shop , Don't Add New Shop's Product , if so, then first delete the cart or place order then add New Product from new Shop",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER DELETE CART',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/delete_cart",
+						mandatory: "cart_id",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer delete cart",
+						example: '{ "cart_id" : "1" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER CART DETAILS',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/cart_detail",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer cart details",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER PLACE ORDER',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/place_order",
+						mandatory: "cart_items, delivery_address_id, is_shipping_address",
+						optional: 'shipping_address, shipping_latitude, shipping_longitude, delivery_charge, delivery_date, promocode_id, card_id, wallet_amount, vat_amount, instruction',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer place order",
+						example: 'Example 1 : { "cart_items": [ { "product_id": "1", "quantity": "3", "base_price": "32" }, { "product_id": "3", "quantity": "10", "base_price": "10" } ], "delivery_address_id" : "1", "is_shipping_address": "1", "promocode_id" : "2", "delivery_charge":"70", "vat_amount":"23" }',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER CANCEL ORDER',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/cancel_order",
+						mandatory: "order_id, reason",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer cancel order",
+						example: '{"order_id": "1", "reason" : "This Order is done by mistake"}',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "Customer can't cancel order after 1 minute of placing order, so cancel it within 1 minute of placing order",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER ORDER DETAILS',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/order_detail",
+						mandatory: "",
+						optional: 'order_no, order_id',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer order details",
+						example: 'Example 1 : {"order_no": "RHGVD3456478JHGV5457"} , Example 2 : {"order_id" : "1"}',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'green',
+						icon: 'person',
+						title: i++ + ' : USER',
+						name: 'USER CONTACT US',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/user/contact_us",
+						mandatory: "first_name, last_name, email, subject, description",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used to Customer add contact us",
+						example: '{"first_name" : "Chandu", "last_name" : "Champion", "email" : "chandu@gmail.com" , "subject" : "Regarding Championship", "description" : "Just Contact Me then I will brief you."}',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+
+					// -.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-SERVICES-.-..-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+					{
+						new_tag: '4',
+						color: '',
+						title: 'SERVICE API',
+						icon: '',
+					},
+					{
+						new_tag: '0',
+						color: 'purple',
+						icon: 'home',
+						title: i++ + ' : SERVICE',
+						name: 'SERVICE BANNER LIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/service/banner_list",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used for Banner list",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'purple',
+						icon: 'home',
+						title: i++ + ' : SERVICE',
+						name: 'SERVICE BRAND LIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/service/brand_list",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used for Brand list",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'purple',
+						icon: 'home',
+						title: i++ + ' : SERVICE',
+						name: 'SERVICE REASON LIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/service/reason_list",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used for Reason list",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'purple',
+						icon: 'home',
+						title: i++ + ' : SERVICE',
+						name: 'SERVICE CATEGORY LIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/service/category_list",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used for Category list",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'purple',
+						icon: 'home',
+						title: i++ + ' : SERVICE',
+						name: 'SERVICE PRODUCT TYPE LIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/service/product_type_list",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used for Product Type List",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'purple',
+						icon: 'home',
+						title: i++ + ' : SERVICE',
+						name: 'SERVICE PROMO CODE LIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/service/promo_code_list",
+						mandatory: "",
+						optional: 'shop_id',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used for Promo code List",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'purple',
+						icon: 'home',
+						title: i++ + ' : SERVICE',
+						name: 'SERVICE CATEGORY WISE SHOP LIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/service/category_wise_shop",
+						mandatory: "",
+						optional: 'category_id',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used for Category wise shop list",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'purple',
+						icon: 'home',
+						title: i++ + ' : SERVICE',
+						name: 'SERVICE NEARBY SHOP LIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/service/nearby_shop_list",
+						mandatory: "",
+						optional: '',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used for Nearby Shop list",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'purple',
+						icon: 'home',
+						title: i++ + ' : SERVICE',
+						name: 'SERVICE SHOP LIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/service/shop_list",
+						mandatory: "",
+						optional: 'category_id, shop_id',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used for Shop List",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+					{
+						new_tag: '0',
+						color: 'purple',
+						icon: 'home',
+						title: i++ + ' : SERVICE',
+						name: 'SERVICE PRODUCT LIST',
+						meth: 'POST',
+						link: "<%= GLOBALS.PORT_BASE_URL %>api/v1/service/product_list",
+						mandatory: "",
+						optional: 'product_id , sort = [asc,desc] , category_id , prod_type_id',
+						is_header: "YES",
+						is_push: "YES",
+						header: "API-KEY,TOKEN",
+						notes: "This is used for Product list",
+						example: '',
+						status: "<br>1. HTTP_OK[200] - code : 0 <br>2. HTTP_OK[200] - code : 1 <br>3. HTTP_OK[200] - code : 2",
+						imp: "",
+					},
+
+					{
+						new_tag: '4',
+						color: 'black',
+						title: 'PICKER API',
+						icon: 'settings',
+					},
+
+					{
+						new_tag: '3',
+						color: 'blue',
+						title: 'DRIVER API',
+						icon: 'receipt',
+					},
+
+					{
+						new_tag: '5',
+						color: 'red',
+						title: 'PAYMENT API',
+						icon: 'money',
+					},
+				]
+			})
+		})	
+	</script>
+</body>
+
+</html>
